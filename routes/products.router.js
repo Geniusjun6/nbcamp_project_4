@@ -2,7 +2,7 @@ import express from 'express';
 export const router = express.Router();
 
 import Products from '../schemas/products.schema.js'
-import productsModel from '../schemas/products.schema.js';
+
 
 // Create 
 // 몽고db에 데이터 넣기
@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
 // 몽고db에 있는 데이터를 불러오는 API
 router.get('/', async (req, res) => {
   try {
-    const products = await productsModel.find({}, 'productName createrName productStatus createDate productId -_id').sort({ createDate: -1 });
+    const products = await Products.find({}, 'productName createrName productStatus createDate productId -_id').sort({ createDate: -1 });
     res.status(200).json(products);
   } catch (err) { // 에러 핸들링을 위해 try...catch 사용
     console.error('데이터를 가져오는 중 에러 발생', err);
@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
 router.get('/detail/:productid', async (req, res) => {
   try {
     const { productid } = req.params;
-    const detailProduct = await productsModel.findOne({ productId: Number(productid) }, '-password -__v -_id');
+    const detailProduct = await Products.findOne({ productId: Number(productid) }, '-password -__v -_id');
     res.status(200).json({ detailProduct });
   } catch (err) {
     console.error('상품조회 실패', err);
@@ -47,7 +47,7 @@ router.put("/detail/:productid", async (req, res) => {
   const { productid } = req.params;
   const { productName, contents, productStatus, password } = req.body;
 
-  const existsProduct = await productsModel.findOne({ productId: Number(productid) });
+  const existsProduct = await Products.findOne({ productId: Number(productid) });
 
   if (!existsProduct) {
     return res.status(400).send({ message: "상품 조회에 실패하였습니다." })
@@ -58,7 +58,7 @@ router.put("/detail/:productid", async (req, res) => {
   }
 
   // 비밀번호가 일치하고 상품이 존재하는 경우에만 수정을 수행
-  await productsModel.updateOne({ productId: Number(id) }, { $set: { productName, contents, productStatus } });
+  await Products.updateOne({ productId: Number(id) }, { $set: { productName, contents, productStatus } });
 });
 
 
@@ -69,7 +69,7 @@ router.delete("/detail/:productid", async (req, res) => {
   const { productid } = req.params;
   const { password } = req.body;
 
-  const existsProduct = await productsModel.findOne({ productId: Number(productid) });
+  const existsProduct = await Products.findOne({ productId: Number(productid) });
 
   if (!existsProduct) {
     return res.status(400).send({ message: "상품 조회에 실패하였습니다." })
@@ -80,7 +80,7 @@ router.delete("/detail/:productid", async (req, res) => {
   }
 
   // 비밀번호가 일치하고 상품이 존재하는 경우에만 삭제 수행
-  await productsModel.deleteOne({ productId: id })
+  await Products.deleteOne({ productId: id })
 
 })
 
