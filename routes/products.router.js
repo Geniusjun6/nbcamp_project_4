@@ -58,7 +58,7 @@ router.put("/detail/:productid", async (req, res) => {
   }
 
   // 비밀번호가 일치하고 상품이 존재하는 경우에만 수정을 수행
-  await Products.updateOne({ productId: Number(id) }, { $set: { productName, contents, productStatus } });
+  await Products.updateOne({ productId: Number(productid) }, { $set: { productName, contents, productStatus } });
 });
 
 
@@ -80,7 +80,7 @@ router.delete("/detail/:productid", async (req, res) => {
   }
 
   // 비밀번호가 일치하고 상품이 존재하는 경우에만 삭제 수행
-  await Products.deleteOne({ productId: id })
+  await Products.deleteOne({ productId: productid })
 
 })
 
