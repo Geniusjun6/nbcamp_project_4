@@ -27,12 +27,12 @@ router.get('/', async (req, res) => {
   }
 });
 
-// /products/detail/:각 상품 id  
+// /products/productDetail/:각 상품 id  
 //상품 상세 조회
-router.get('/detail/:id', async (req, res) => {
+router.get('/detail/:productid', async (req, res) => {
   try {
-    const { id } = req.params;
-    const detailProduct = await productsModel.findOne({ productId: Number(id) }, '-password -__v -_id');
+    const { productid } = req.params;
+    const detailProduct = await productsModel.findOne({ productId: Number(productid) }, '-password -__v -_id');
     res.status(200).json({ detailProduct });
   } catch (err) {
     console.error('상품조회 실패', err);
@@ -43,11 +43,11 @@ router.get('/detail/:id', async (req, res) => {
 
 //Update
 //상품 수정
-router.put("/detail/:id", async (req, res) => {
-  const { id } = req.params;
+router.put("/detail/:productid", async (req, res) => {
+  const { productid } = req.params;
   const { productName, contents, productStatus, password } = req.body;
 
-  const existsProduct = await productsModel.findOne({ productId: Number(id) });
+  const existsProduct = await productsModel.findOne({ productId: Number(productid) });
 
   if (!existsProduct) {
     return res.status(400).send({ message: "상품 조회에 실패하였습니다." })
@@ -65,11 +65,11 @@ router.put("/detail/:id", async (req, res) => {
 // Delete
 // 상품 삭제
 
-router.delete("/detail/:id", async (req, res) => {
-  const { id } = req.params;
+router.delete("/detail/:productid", async (req, res) => {
+  const { productid } = req.params;
   const { password } = req.body;
 
-  const existsProduct = await productsModel.findOne({ productId: Number(id) });
+  const existsProduct = await productsModel.findOne({ productId: Number(productid) });
 
   if (!existsProduct) {
     return res.status(400).send({ message: "상품 조회에 실패하였습니다." })
