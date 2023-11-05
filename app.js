@@ -1,9 +1,8 @@
 import express from "express"
-import dotenv from 'dotenv'; // .env 패키지를 사용하기 위해 불러오고 실행함
-dotenv.config();
+
 
 const app = express();
-const port = process.env.PORT;
+const port = 3000
 
 import connect from "./schemas/index.js";
 connect();
