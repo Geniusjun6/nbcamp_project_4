@@ -33,12 +33,6 @@ router.get('/detail/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const detailProduct = await productsModel.findOne({ productId: Number(id) }, '-password -__v -_id');
-    // const [detailProduct] = products.filter((product) => product.productId === Number(id)) => findOne 메서드로 진행 시 훨씬 간결하다고 판단
-    //   .map(({ productName, createrName, createDate }) => ({
-    //     productName,
-    //     createrName,
-    //     createDate,
-    //   }));
     res.status(200).json({ detailProduct });
   } catch (err) {
     console.error('상품조회 실패', err);
@@ -85,9 +79,9 @@ router.delete("/detail/:id", async (req, res) => {
     return res.status(500).send({ message: "비밀번호를 확인해주세요." });
   }
 
-  if (existsProduct) {
-    await productsModel.deleteOne({ productId: id })
-  }
+  // 비밀번호가 일치하고 상품이 존재하는 경우에만 삭제 수행
+  await productsModel.deleteOne({ productId: id })
+
 })
 
 export default router; 
