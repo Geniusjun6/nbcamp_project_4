@@ -1,0 +1,43 @@
+# 상품 목록 조회
+GET http://localhost:3000/api/products/
+
+###
+
+# 상품 상세 조회
+GET http://localhost:3000/api/products/detail/6544d791f47dec1d5c32472c
+
+###
+
+# 상품 생성
+POST http://localhost:3000/api/products/create
+Content-Type: application/json
+
+{
+  "pdTitle":"test8",
+  "pdContent":"test8상품입니다",
+  "nickName":"test8",
+  "pdPassword":"123"
+}
+
+###
+
+# 상품 수정
+PUT http://localhost:3000/api/products/edit/6544d791f47dec1d5c32472c
+Content-Type: application/json
+
+{
+  "pdTitle":"test수정",
+  "pdContent":"판매 완료했습니다.",
+  "pdState":false,
+  "pdPassword":123
+}
+
+###
+
+# 상품 삭제
+DELETE http://localhost:3000/api/products/detail/6544d98c2376e7d8d745bb05
+Content-Type: application/json
+
+{
+  "pdPassword":123
+}
