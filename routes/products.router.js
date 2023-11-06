@@ -44,21 +44,26 @@ router.get('/detail/:productid', async (req, res) => {
 //Update
 //상품 수정
 router.put("/detail/:productid", async (req, res) => {
-  const { productid } = req.params;
-  const { productName, contents, productStatus, password } = req.body;
+  try {
+    const { productid } = req.params;
+    const { productName, contents, productStatus, password } = req.body;
 
-  const existsProduct = await Products.findOne({ productId: Number(productid) });
+    const existsProduct = await Products.findOne({ productId: Number(productid) });
 
-  if (!existsProduct) {
-    return res.status(400).send({ message: "상품 조회에 실패하였습니다." })
+    if (!existsProduct) {
+      return res.status(400).send({ message: "상품 조회에 실패하였습니다." })
+    }
+
+    if (existsProduct.password !== password) {
+      return res.status(500).send({ message: "비밀번호를 확인해주세요." });
+    }
+
+    // 비밀번호가 일치하고 상품이 존재하는 경우에만 수정을 수행
+    await Products.updateOne({ productId: Number(productid) }, { $set: { productName, contents, productStatus } });
+  } catch {
+    console.error('상품 수정 실패', err);
+    res.status(400).send('상품수정에 실패했습니다.');
   }
-
-  if (existsProduct.password !== password) {
-    return res.status(500).send({ message: "비밀번호를 확인해주세요." });
-  }
-
-  // 비밀번호가 일치하고 상품이 존재하는 경우에만 수정을 수행
-  await Products.updateOne({ productId: Number(productid) }, { $set: { productName, contents, productStatus } });
 });
 
 
@@ -66,22 +71,26 @@ router.put("/detail/:productid", async (req, res) => {
 // 상품 삭제
 
 router.delete("/detail/:productid", async (req, res) => {
-  const { productid } = req.params;
-  const { password } = req.body;
+  try {
+    const { productid } = req.params;
+    const { password } = req.body;
 
-  const existsProduct = await Products.findOne({ productId: Number(productid) });
+    const existsProduct = await Products.findOne({ productId: Number(productid) });
 
-  if (!existsProduct) {
-    return res.status(400).send({ message: "상품 조회에 실패하였습니다." })
+    if (!existsProduct) {
+      return res.status(400).send({ message: "상품 조회에 실패하였습니다." })
+    }
+
+    if (existsProduct.password !== password) {
+      return res.status(500).send({ message: "비밀번호를 확인해주세요." });
+    }
+
+    // 비밀번호가 일치하고 상품이 존재하는 경우에만 삭제 수행
+    await Products.deleteOne({ productId: productid })
+  } catch {
+    console.error('상품 삭제 실패', err);
+    res.status(400).send('상품 삭제에 실패했습니다.');
   }
-
-  if (existsProduct.password !== password) {
-    return res.status(500).send({ message: "비밀번호를 확인해주세요." });
-  }
-
-  // 비밀번호가 일치하고 상품이 존재하는 경우에만 삭제 수행
-  await Products.deleteOne({ productId: productid })
-
 })
 
 export default router; 
