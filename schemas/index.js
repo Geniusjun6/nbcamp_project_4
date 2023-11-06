@@ -7,7 +7,7 @@ const connect = () => {
   mongoose // **** mongoose 패키지를 설치했을 때 Puny코드 관련 문구가 뜹니다.. 맞나요..? 
     .connect(
       // 빨간색으로 표시된 부분은 대여한 ID, Password, 주소에 맞게끔 수정해주세요!
-      `mongodb+srv://12345:${process.env.DB_PASSWORD}@geniusjun6.zouu4ec.mongodb.net/?retryWrites=true&w=majority`,
+      `mongodb+srv://Geniusjun6:${process.env.DB_PASSWORD}@geniusjun6.zouu4ec.mongodb.net/?retryWrites=true&w=majority`,
       {
         dbName: 'node_lv1', // node_lv1 데이터베이스명을 사용합니다.
       },
