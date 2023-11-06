@@ -43,6 +43,7 @@ router.get('/detail/:productid', async (req, res) => {
 
 //Update
 //상품 수정
+// 상품 수정
 router.put("/detail/:productid", async (req, res) => {
   try {
     const { productid } = req.params;
@@ -51,7 +52,7 @@ router.put("/detail/:productid", async (req, res) => {
     const existsProduct = await Products.findOne({ productId: Number(productid) });
 
     if (!existsProduct) {
-      return res.status(400).send({ message: "상품 조회에 실패하였습니다." })
+      return res.status(400).send({ message: "상품 조회에 실패하였습니다." });
     }
 
     if (existsProduct.password !== password) {
@@ -60,11 +61,15 @@ router.put("/detail/:productid", async (req, res) => {
 
     // 비밀번호가 일치하고 상품이 존재하는 경우에만 수정을 수행
     await Products.updateOne({ productId: Number(productid) }, { $set: { productName, contents, productStatus } });
-  } catch {
+
+    // 수정 성공 시 200 상태 코드 반환
+    res.status(200).send('상품 수정이 완료되었습니다.');
+  } catch (err) {
     console.error('상품 수정 실패', err);
-    res.status(400).send('상품수정에 실패했습니다.');
+    res.status(400).send('상품 수정에 실패했습니다.');
   }
 });
+
 
 
 // Delete
@@ -87,6 +92,7 @@ router.delete("/detail/:productid", async (req, res) => {
 
     // 비밀번호가 일치하고 상품이 존재하는 경우에만 삭제 수행
     await Products.deleteOne({ productId: productid })
+    res.status(200).send({ message: "상품이 삭제되었습니다." })
   } catch {
     console.error('상품 삭제 실패', err);
     res.status(400).send('상품 삭제에 실패했습니다.');
