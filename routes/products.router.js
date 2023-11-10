@@ -6,7 +6,7 @@ import Products from '../schemas/products.schema.js'
 
 // Create 
 // 몽고db에 데이터 넣기
-router.post('/', async (req, res) => {
+router.post('/create', async (req, res) => {
   const { productName, createrName, password, contents } = req.body; // status, createDate 스키마 값은 defalut로 설정
 
   const createdProduct = await Products.create({ productName, createrName, password, contents })
@@ -44,7 +44,7 @@ router.get('/detail/:productid', async (req, res) => {
 //Update
 //상품 수정
 // 상품 수정
-router.put("/detail/:productid", async (req, res) => {
+router.put("/detail/:productid/edit", async (req, res) => {
   try {
     const { productid } = req.params;
     const { productName, contents, productStatus, password } = req.body;
@@ -75,7 +75,7 @@ router.put("/detail/:productid", async (req, res) => {
 // Delete
 // 상품 삭제
 
-router.delete("/detail/:productid", async (req, res) => {
+router.delete("/detail/:productid/delete", async (req, res) => {
   try {
     const { productid } = req.params;
     const { password } = req.body;
