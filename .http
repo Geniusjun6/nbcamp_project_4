@@ -1,8 +1,12 @@
 # 페이지 접속
 GET http://localhost:3000/
 
+###
+
 # 상품조회
 GET http://localhost:3000/api/products/
+
+###
 
 # 상품 상세 조회
 GET http://localhost:3000/api/products/detail/4
@@ -10,7 +14,7 @@ GET http://localhost:3000/api/products/detail/4
 ###
 
 # 상품 생성
-POST http://localhost:3000/api/products/create
+POST http://localhost:3000/api/products
 Content-Type: application/json
 
   {
@@ -23,7 +27,7 @@ Content-Type: application/json
 ###
 
 # 상품 수정
-PUT http://localhost:3000/api/products/detail/1/edit
+PUT http://localhost:3000/api/products/detail/1
 Content-Type: application/json
 
 {
@@ -35,7 +39,7 @@ Content-Type: application/json
 ###
 
 # 상품 삭제
-DELETE http://localhost:3000/api/products/detail/13/delete
+DELETE http://localhost:3000/api/products/detail/13
 Content-Type: application/json
 
 {

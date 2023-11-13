@@ -6,7 +6,7 @@ import Products from '../schemas/products.schema.js'
 
 // Create 
 // 몽고db에 데이터 넣기
-router.post('/products/create', async (req, res) => {
+router.post('/products', async (req, res) => {
   try {
     const { productName, creatorName, password, contents } = req.body; // status, createDate 스키마 값은 defalut로 설정
     if (!req.body) { return res.status(400).json({ errorMesseage: " 데이터 형식이 올바르지 않습니다. " }) };
@@ -25,6 +25,7 @@ router.post('/products/create', async (req, res) => {
 });
 
 
+
 //Read
 // /products에 모든 상품조회
 // 몽고db에 있는 데이터를 불러오는 API
@@ -40,10 +41,10 @@ router.get('/products', async (req, res) => {
 
 // /products/productDetail/:각 상품 id  
 //상품 상세 조회
-router.get('/products/detail/:productid', async (req, res) => {
+router.get('/products/detail/:productId', async (req, res) => {
   try {
-    const { productid } = req.params;
-    const detailProduct = await Products.findOne({ productId: Number(productid) }, '-password -__v -_id');
+    const { productId } = req.params;
+    const detailProduct = await Products.findOne({ productId: Number(productId) }, '-password -__v -_id');
 
     if (!detailProduct) {
       return res.status(404).json({ message: "상품을 찾을 수 없습니다." });
@@ -60,12 +61,12 @@ router.get('/products/detail/:productid', async (req, res) => {
 //Update
 //상품 수정
 // 상품 수정
-router.put("/products/detail/:productid/edit", async (req, res) => {
+router.put("/products/detail/:productId", async (req, res) => {
   try {
-    const { productid } = req.params;
+    const { productId } = req.params;
     const { productName, contents, productStatus, password } = req.body;
 
-    const existsProduct = await Products.findOne({ productId: Number(productid) });
+    const existsProduct = await Products.findOne({ productId: Number(productId) });
 
     if (!existsProduct) {
       return res.status(404).send({ message: "상품을 찾을 수 없습니다." });
@@ -76,7 +77,7 @@ router.put("/products/detail/:productid/edit", async (req, res) => {
     }
 
     // 비밀번호가 일치하고 상품이 존재하는 경우에만 수정을 수행
-    await Products.updateOne({ productId: Number(productid) }, { $set: { productName, contents, productStatus } });
+    await Products.updateOne({ productId: Number(productId) }, { $set: { productName, contents, productStatus } });
 
     // 수정 성공 시 200 상태 코드 반환
     res.status(200).send('상품 수정이 완료되었습니다.');
@@ -90,12 +91,12 @@ router.put("/products/detail/:productid/edit", async (req, res) => {
 
 // Delete
 // 상품 삭제
-router.delete("/products/detail/:productid/delete", async (req, res) => {
+router.delete("/products/detail/:productId", async (req, res) => {
   try {
-    const { productid } = req.params;
+    const { productId } = req.params;
     const { password } = req.body;
 
-    const existsProduct = await Products.findOne({ productId: Number(productid) });
+    const existsProduct = await Products.findOne({ productId: Number(productId) });
 
     if (!existsProduct) {
       return res.status(404).send({ message: "상품 조회에 실패하였습니다." })
@@ -106,7 +107,7 @@ router.delete("/products/detail/:productid/delete", async (req, res) => {
     }
 
     // 비밀번호가 일치하고 상품이 존재하는 경우에만 삭제 수행
-    await Products.deleteOne({ productId: productid })
+    await Products.deleteOne({ productId: productId })
     res.status(200).send({ message: "상품이 삭제되었습니다." })
   } catch (error) {
     console.error('상품 삭제 실패', err);
