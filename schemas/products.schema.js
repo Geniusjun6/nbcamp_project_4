@@ -6,13 +6,14 @@ const productsSchemas = new mongoose.Schema({
     type: String,
     required: true,
   },
-  createrName: { // 작성자명
+  creatorName: { // 작성자명
     type: String,
     required: true,
   },
   productStatus: { // 상품 상태
     type: String,
     required: true,
+    enum: ["FOR_SALE", "SOLD_OUT"],
     default: "FOR_SALE" // 상품의 기본 상태는 FOR_SALE 
   },
   createDate: { // 작성 날짜

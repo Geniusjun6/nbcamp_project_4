@@ -1,6 +1,5 @@
 import express from "express"
 
-
 const app = express();
 const port = 3000
 
@@ -19,5 +18,5 @@ app.listen(port, () => {
   console.log(port, '포트 연결 성공 !');
 })
 
-app.use('/products', [productsRouter]); // productRouter를 사용하기 위한 미들웨어
+app.use('/api', [productsRouter]); // productRouter를 사용하기 위한 미들웨어
 // git test

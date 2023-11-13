@@ -1,42 +1,43 @@
-# 상품 목록 조회
-GET http://localhost:3000/products/
+# 페이지 접속
+GET http://localhost:3000/
 
-###
+# 상품조회
+GET http://localhost:3000/api/products/
 
 # 상품 상세 조회
-GET http://localhost:3000/products/detail/1
+GET http://localhost:3000/api/products/detail/4
 
 ###
 
 # 상품 생성
-POST http://localhost:3000/products/create
+POST http://localhost:3000/api/products/create
 Content-Type: application/json
 
   {
-    "productName": "북극곰",
-    "contents": "북극곰의 눈물을 아시나요",
-    "createrName": "문준식6",
+    "productName": "앵무새",
+    "contents": "말을 잘하는 앵무새",
+    "creatorName": "문준식6",
     "password": "qwer!@#"
   }
 
 ###
 
 # 상품 수정
-PUT http://localhost:3000/products/detail/1/edit
+PUT http://localhost:3000/api/products/detail/1/edit
 Content-Type: application/json
 
 {
-  "productName": "참새",
-  "contents" : "길거리에 떠돌아다니는 참새", 
+  "productName": "비둘기",
+  "contents" : "극혐", 
   "password" : "qwer"
 }
 
 ###
 
 # 상품 삭제
-DELETE http://localhost:3000/products/detail/1/delete
+DELETE http://localhost:3000/api/products/detail/13/delete
 Content-Type: application/json
 
 {
-  "password":"qwer"
+  "password":"qwer!@#"
 }
