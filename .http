@@ -54,10 +54,10 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
   {
-    "email": "1232123@naver.m",
+    "email": "test@test.com",
     "userName": "문준식",
-    "password": "123",
-    "confirmPassword": "123"
+    "password": "123123123",
+    "confirmPassword": "123123123"
   }
 
   ###
