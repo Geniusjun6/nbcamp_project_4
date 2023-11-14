@@ -28,27 +28,8 @@ const productsSchemas = new mongoose.Schema({
   contents: { // 작성 내용
     type: String
   },
-  productId: {
-    type: Number,
-    unique: true // productId를 고유하게 설정
-  },
 })
 
-// 게시글이 하나씩 늘어날 때마다 productId 자동으로 추가 (chatGPT..)
-productsSchemas.pre('save', async function (next) {
-  if (!this.productId) {
-    try {
-      const latestProduct = await productsModel.findOne({}, {}, { sort: { 'productId': -1 } });
-      const nextProductId = (latestProduct ? latestProduct.productId : 0) + 1;
-      this.productId = nextProductId;
-      next();
-    } catch (err) {
-      next(err);
-    }
-  } else {
-    next();
-  }
-});
 
 const productsModel = mongoose.model("Products", productsSchemas); // 위에서 정의한 스키마들을 Products 이름으로 사용한다.
 export default productsModel;

@@ -9,7 +9,7 @@ GET http://localhost:3000/api/products/
 ###
 
 # 상품 상세 조회
-GET http://localhost:3000/api/products/detail/4
+GET http://localhost:3000/api/products/detail/65531c6e129301de27f77234
 
 ###
 
@@ -18,30 +18,31 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
   {
-    "productName": "앵무새",
-    "contents": "말을 잘하는 앵무새",
+    "productName": "도마뱀",
+    "contents": "꼬리가 있는 도마뱀",
     "creatorName": "문준식6",
-    "password": "qwer!@#"
+    "password": "123"
   }
 
 ###
 
 # 상품 수정
-PUT http://localhost:3000/api/products/detail/1
+PUT http://localhost:3000/api/products/detail/65531c6e129301de27f77234
 Content-Type: application/json
 
 {
   "productName": "비둘기",
-  "contents" : "극혐", 
-  "password" : "qwer"
+  "contents" : "극혐",
+  "productStatus" : "SOLD_OUT",
+  "password" : "123"
 }
 
 ###
 
 # 상품 삭제
-DELETE http://localhost:3000/api/products/detail/13
+DELETE http://localhost:3000/api/products/detail/65531c6e129301de27f77234
 Content-Type: application/json
 
 {
-  "password":"qwer!@#"
+  "password":"123"
 }
