@@ -1,17 +1,15 @@
 import express from "express"
 import db from './models/index.cjs';
-import connect from "./schemas/index.js";
-connect();
-import productsRouter from "./routes/products.router.js"
+import cookieParser from "cookie-parser";
+import productsRouter from "./routes/products.router.js";
+import userRouter from "./routes/users.router.js";
+
 
 const app = express();
 const port = 3000
 
 app.use(express.json());
-
-// app.get('/', (req, res) => {
-//   res.send("Geniusjun6 Store !!")
-// });
+app.use(cookieParser());
 
 try {
   await db.sequelize.authenticate();
@@ -20,9 +18,9 @@ try {
   console.error("sequelize 연결에 실패했습니다.", error);
 }
 
+app.use('/api', [productsRouter, userRouter]); // productRouter를 사용하기 위한 미들웨어
+
+
 app.listen(port, () => {
   console.log(port, '포트 연결 성공 !');
 })
-
-app.use('/api', [productsRouter]); // productRouter를 사용하기 위한 미들웨어
-// git test

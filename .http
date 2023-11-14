@@ -46,3 +46,18 @@ Content-Type: application/json
 {
   "password":"123"
 }
+
+###
+
+# 회원가입
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+  {
+    "email": "1232123@naver.m",
+    "userName": "문준식",
+    "password": "123",
+    "confirmPassword": "123"
+  }
+
+  ###
