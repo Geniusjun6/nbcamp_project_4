@@ -33,7 +33,7 @@ router.get('/products', async (req, res) => {
   try {
     const products = await Products.find({}, 'productName creatorName productStatus createDate _id').sort({ createDate: -1 });
     res.status(200).json([{ success: true }, { message: "상품 조회에 성공했습니다." }, { products }]);
-  } catch (err) { // 에러 핸들링을 위해 try...catch 사용
+  } catch (error) { // 에러 핸들링을 위해 try...catch 사용
     console.error('데이터를 가져오는 중 에러 발생', error);
     res.status(500).json({ errorMessage: "상품을 조회하는데 실패했습니다." });
   }
@@ -88,7 +88,6 @@ router.put("/products/detail/:productId", async (req, res) => {
 });
 
 
-
 // Delete
 // 상품 삭제
 router.delete("/products/detail/:productId", async (req, res) => {
@@ -113,6 +112,6 @@ router.delete("/products/detail/:productId", async (req, res) => {
     console.error('상품 삭제 실패', error);
     res.status(500).json('상품 삭제에 실패했습니다.');
   }
-})
+});
 
 export default router; 

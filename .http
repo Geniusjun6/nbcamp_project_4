@@ -54,10 +54,21 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
   {
-    "email": "test@test.com",
+    "email": "test@test.c22o2m2",
     "userName": "문준식",
     "password": "123123123",
     "confirmPassword": "123123123"
   }
 
-  ###
+###
+
+# 로그인
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+  {
+    "email": "test@test.c22o2m2",
+    "password": "123123123"
+  }
+
+###
