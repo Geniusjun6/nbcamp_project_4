@@ -4,16 +4,17 @@ import authMiddleware from '../middlwares/need-signin.middlware.js';
 import { Op } from 'sequelize';
 
 const { Products } = db;
+const { Users } = db;
 const router = express.Router();
 
 
-// Create 상품 등록
+// Create 상품 등록 //
 router.post('/products', authMiddleware, async (req, res) => {
   try {
     const { id } = res.locals.user;
     const { productName, contents } = req.body;
 
-
+    // 데이터 형식이 바르지 않을 경우
     if (!req.body) { return res.status(400).json({ errorMessage: " 데이터 형식이 올바르지 않습니다. " }) };
 
     // 데이터가 모두 입력되지 않았을 경우
@@ -33,31 +34,56 @@ router.post('/products', authMiddleware, async (req, res) => {
 
 
 
-//Read
-// /products에 모든 상품조회
-// 몽고db에 있는 데이터를 불러오는 API
-router.get('/products', async (req, res) => {
+// Read 전체 상품 조회//
+router.get('/products', authMiddleware, async (req, res) => {
   try {
-    const products = await Products.find({}, 'productName creatorName productStatus createDate _id').sort({ createDate: -1 });
-    res.status(200).json([{ success: true }, { message: "상품 조회에 성공했습니다." }, { products }]);
-  } catch (error) { // 에러 핸들링을 위해 try...catch 사용
+    const sortValue = req.query.sort; // query string에서 정렬값 받아오기
+    let sort
+
+    // 정렬값 결정하기
+    if (sortValue && (sortValue.toUpperCase() === 'ASC' || sortValue.toUpperCase() === 'DESC')) { // sortValue가 있고, 정렬값이 정해진 경우
+      sort = sortValue.toUpperCase(); // 정해진 정렬값을 사용하고 
+    } else { // 아니면 내림차순(최신순)으로 정렬한다.
+      sort = 'DESC';
+    };
+
+    const products = await Products.findAll({
+      attributes: { exclude: ["updatedAt"] },
+      include: [{
+        model: Users,
+        attributes: ["userName"]
+      }],
+      order: [['createdAt', sort]]
+    });
+    res.status(200).json([{ products }]);
+
+  } catch (error) {
     console.error('데이터를 가져오는 중 에러 발생', error);
     res.status(500).json({ errorMessage: "상품을 조회하는데 실패했습니다." });
   }
 });
 
-// /products/productDetail/:각 상품 id  
-//상품 상세 조회
+
+
+// Read 상품 상세 조회 // 
 router.get('/products/detail/:productId', async (req, res) => {
   try {
     const { productId } = req.params;
-    const detailProduct = await Products.findOne({ _id: productId }, '-password -__v');
+
+    const detailProduct = await Products.findOne({
+      where: { id: productId },
+      include: [{
+        model: Users,
+        attributes: ["userName"]
+      }]
+    });
 
     if (!detailProduct) {
       return res.status(404).json({ message: "상품을 찾을 수 없습니다." });
     };
 
     res.status(200).json({ detailProduct });
+
   } catch (error) {
     console.error('상품조회 실패', error);
     res.status(500).json({ errorMessage: '상품조회에 실패했습니다.' });
@@ -65,9 +91,7 @@ router.get('/products/detail/:productId', async (req, res) => {
 });
 
 
-//Update
-//상품 수정
-// 상품 수정
+// Update 상품 수정 // 
 router.put("/products/detail/:productId", authMiddleware, async (req, res) => {
   try {
     const { productId } = req.params;
@@ -82,7 +106,7 @@ router.put("/products/detail/:productId", authMiddleware, async (req, res) => {
     };
 
     // 기존 작성한 상품이 본인 것이 아닐 경우
-    if (existsProduct.id !== userId) {
+    if (existsProduct.userId !== userId) {
       return res.status(401).json({ errorMessage: "상품을 수정할 권한이 없습니다." });
     };
 
@@ -96,6 +120,7 @@ router.put("/products/detail/:productId", authMiddleware, async (req, res) => {
       }
     );
     res.status(200).json({ message: '상품 수정이 완료되었습니다.' });
+
   } catch (error) {
     console.error('상품 수정 실패', error);
 
@@ -108,8 +133,7 @@ router.put("/products/detail/:productId", authMiddleware, async (req, res) => {
 });
 
 
-// Delete
-// 상품 삭제
+// Delete 상품 삭제 //
 router.delete("/products/detail/:productId", authMiddleware, async (req, res) => {
   try {
     const { productId } = req.params;

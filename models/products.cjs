@@ -4,15 +4,10 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Products extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // 1. Posts 모델에서
       this.belongsTo(models.Users, { // 2. Users 모델에게 N:1 관계를 설정
-        targetKey: "id", // 3. Users 모델의 userId 컬럼을
+        targetKey: "id", // 3. Users 모델의 id 컬럼을
         foreignKey: "userId" // 4. Posts 모델의 UserId 컬럼과 연결
       });
     };

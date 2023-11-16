@@ -5,13 +5,13 @@ import authMiddleware from '../middlwares/need-signin.middlware.js';
 const { Users } = db;
 const router = express.Router();
 
-// 사용자 조회 
+// Read 사용자 조회 // 
 router.get("/users/userInfo", authMiddleware, async (req, res) => {
   try {
     const { id } = res.locals.user;
 
     const user = await Users.findOne({
-      attributes: ["id", "email", "createdAt", "updatedAt"],
+      attributes: { exclude: ["password"] },
       where: { id }
     });
 

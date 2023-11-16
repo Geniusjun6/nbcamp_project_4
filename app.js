@@ -20,7 +20,7 @@ try {
   console.error("sequelize 연결에 실패했습니다.", error);
 }
 
-app.use('/api', [productsRouter, authRouter, userRouter]); // productRouter를 사용하기 위한 미들웨어
+app.use('/api', [productsRouter, authRouter, userRouter]);
 
 
 app.listen(port, () => {

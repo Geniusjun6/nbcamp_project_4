@@ -8,9 +8,9 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
   {
-    "email": "test2@test.test",
-    "userName": "문준식2",
-    "password": "12312313",
+    "email": "test3@test.tst",
+    "userName": "문준식3",
+    "password": "1231",
     "confirmPassword": "12312313"
   }
 
@@ -21,7 +21,7 @@ POST http://localhost:3000/api/login
 Content-Type: application/json
 
   {
-    "email": "test1@test.test",
+    "email": "test3@test.test",
     "password": "12312313"
   }
 
@@ -32,13 +32,23 @@ GET http://localhost:3000/api/users/userInfo
 
 ###
 
-# 상품조회
-GET http://localhost:3000/api/products/
+# 상품조회(내림차순)
+GET http://localhost:3000/api/products?sort=asc
+
+###
+
+# 상품조회(오름차순)
+GET http://localhost:3000/api/products?sort=desc
+
+###
+
+# 상품조회(Default = 오름차순)
+GET http://localhost:3000/api/products
 
 ###
 
 # 상품 상세 조회
-GET http://localhost:3000/api/products/detail/1
+GET http://localhost:3000/api/products/detail/6
 
 ###
 
@@ -47,28 +57,24 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
   {
-    "productName": "기러기",
-    "contents": "거꾸로 해도 기러기"
+    "productName": "독수리",
+    "contents": "하늘의 왕 독수리"
   }
 
 ###
 
 # 상품 수정
-PUT http://localhost:3000/api/products/detail/1
+PUT http://localhost:3000/api/products/detail/7
 Content-Type: application/json
 
 {
-  "productName": "두더지",
-  "contents" : "땅을 파는 두더지",
-  "status" : "FOR_SALE"
+  "productName": "거북이",
+  "contents" : "거북이는 헤엄을 잘쳐요",
+  "status" : "SOLD_OUT"
 }
 
 ###
 
 # 상품 삭제
-DELETE http://localhost:3000/api/products/detail/65531c6e129301de27f77234
+DELETE http://localhost:3000/api/products/detail/5
 Content-Type: application/json
-
-{
-  "password":"123"
-}

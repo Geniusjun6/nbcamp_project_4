@@ -6,16 +6,11 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
 
       // 1. Users 모델에서 Products 모델의 Id 값 넘겨주기
       this.hasMany(models.Products, { // 2. Products 모델에게 1:N 관계 설정
-        sourceKey: "id", // 3. Users 모델의 userId 컬럼을
+        sourceKey: "id", // 3. Users 모델의 id 컬럼을
         foreignKey: "userId" // 4. Products 모델의 UserId 컬럼과 연결
       });
     };

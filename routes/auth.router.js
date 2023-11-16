@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 const router = express.Router();
 const { Users } = db;
 
-// 회원가입 
+// 회원가입 //
 router.post("/users", async (req, res) => {
   const { email, userName, password, confirmPassword } = req.body;
   try {
@@ -48,7 +48,7 @@ router.post("/users", async (req, res) => {
 });
 
 
-// 로그인
+// 로그인 //
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
