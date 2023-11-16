@@ -1,21 +1,25 @@
 import express from 'express';
-export const router = express.Router();
+import db from '../models/index.cjs';
+import authMiddleware from '../middlwares/need-signin.middlware.js';
+import { Op } from 'sequelize';
 
-import Products from '../schemas/products.schema.js'
+const { Products } = db;
+const router = express.Router();
 
 
 // Create 
-// 몽고db에 데이터 넣기
-router.post('/products', async (req, res) => {
+router.post('/products', authMiddleware, async (req, res) => {
   try {
-    const { productName, creatorName, password, contents } = req.body; // status, createDate 스키마 값은 defalut로 설정
+    const { id } = res.locals.user;
+    console.log('id: ', typeof id);
+    const { productName, contents } = req.body;
     if (!req.body) { return res.status(400).json({ errorMessage: " 데이터 형식이 올바르지 않습니다. " }) };
 
-    if (!productName || !creatorName || !password || !contents) {
+    if (!productName || !contents) {
       return res.status(400).json({ errorMessage: " 데이터를 모두 입력해주세요. " });
     }
 
-    const createdProduct = await Products.create({ productName, creatorName, password, contents })
+    await Products.create({ userId: id, productName, contents })
 
     res.status(201).json({ message: "상품등록에 성공하였습니다." });
   } catch (error) {
@@ -61,30 +65,43 @@ router.get('/products/detail/:productId', async (req, res) => {
 //Update
 //상품 수정
 // 상품 수정
-router.put("/products/detail/:productId", async (req, res) => {
+router.put("/products/detail/:productId", authMiddleware, async (req, res) => {
   try {
     const { productId } = req.params;
-    const { productName, contents, productStatus, password } = req.body;
+    const { id: userId } = res.locals.user; // 로컬 유저에 들어있는 id 키값을 userId 변수로 받는다.
+    const { productName, contents, status } = req.body;
 
-    const existsProduct = await Products.findOne({ _id: productId });
+    const existsProduct = await Products.findOne({ where: { id: productId } });
 
     if (!existsProduct) {
       return res.status(404).json({ errorMessage: "상품을 찾을 수 없습니다." });
-    }
+    };
 
-    if (existsProduct.password !== password) {
-      return res.status(401).json({ errorMessage: "비밀번호를 확인해주세요." });
-    }
+    if (existsProduct.id !== userId) {
+      return res.status(401).json({ errorMessage: "상품을 수정할 권한이 없습니다." });
+    };
 
-    // 비밀번호가 일치하고 상품이 존재하는 경우에만 수정을 수행
-    await Products.updateOne({ _id: productId }, { $set: { productName, contents, productStatus } });
+    await Products.update(
+      { productName, contents, status },
+      {
+        where: {
+          [Op.and]: [{ id: productId }, { userId }]
+        }
+      }
+    );
+
 
     // 수정 성공 시 200 상태 코드 반환
     res.status(200).json({ message: '상품 수정이 완료되었습니다.' });
   } catch (error) {
     console.error('상품 수정 실패', error);
-    res.status(500).json({ errorMessage: '상품 수정에 실패했습니다.' });
-  }
+
+    if (error.name === 'SequelizeValidationError') { // 모델에서 validate 기능 활용해보기 !!!!
+      return res.status(401).json(error.message);
+    }
+
+    res.status(500).json({ errorMessage: "상품 수정에 실패했습니다." });
+  };
 });
 
 

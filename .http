@@ -3,13 +3,42 @@ GET http://localhost:3000/
 
 ###
 
+# 회원가입
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+  {
+    "email": "test2@test.test",
+    "userName": "문준식2",
+    "password": "12312313",
+    "confirmPassword": "12312313"
+  }
+
+###
+
+# 로그인
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+  {
+    "email": "test1@test.test",
+    "password": "12312313"
+  }
+
+### 
+
+# 사용자 조회 
+GET http://localhost:3000/api/users/userInfo
+
+###
+
 # 상품조회
 GET http://localhost:3000/api/products/
 
 ###
 
 # 상품 상세 조회
-GET http://localhost:3000/api/products/detail/65531c6e129301de27f77234
+GET http://localhost:3000/api/products/detail/1
 
 ###
 
@@ -18,23 +47,20 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
   {
-    "productName": "도마뱀",
-    "contents": "꼬리가 있는 도마뱀",
-    "creatorName": "문준식6",
-    "password": "123"
+    "productName": "기러기",
+    "contents": "거꾸로 해도 기러기"
   }
 
 ###
 
 # 상품 수정
-PUT http://localhost:3000/api/products/detail/65531c6e129301de27f77234
+PUT http://localhost:3000/api/products/detail/1
 Content-Type: application/json
 
 {
-  "productName": "비둘기",
-  "contents" : "극혐",
-  "productStatus" : "SOLD_OUT",
-  "password" : "123"
+  "productName": "두더지",
+  "contents" : "땅을 파는 두더지",
+  "status" : "FOR_SALE"
 }
 
 ###
@@ -46,29 +72,3 @@ Content-Type: application/json
 {
   "password":"123"
 }
-
-###
-
-# 회원가입
-POST http://localhost:3000/api/users
-Content-Type: application/json
-
-  {
-    "email": "test@test.c22o2m2",
-    "userName": "문준식",
-    "password": "123123123",
-    "confirmPassword": "123123123"
-  }
-
-###
-
-# 로그인
-POST http://localhost:3000/api/login
-Content-Type: application/json
-
-  {
-    "email": "test@test.c22o2m2",
-    "password": "123123123"
-  }
-
-###

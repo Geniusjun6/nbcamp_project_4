@@ -11,6 +11,7 @@ module.exports = {
       },
       userName: {
         allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING
       },
       email: {
