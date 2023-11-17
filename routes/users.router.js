@@ -15,7 +15,7 @@ router.get("/users/userInfo", authMiddleware, async (req, res) => {
       where: { id }
     });
 
-    return res.status(200).json({ data: user });
+    return res.status(200).json({ user });
 
   } catch (error) {
     console.error("사용자 조회 실패", error);

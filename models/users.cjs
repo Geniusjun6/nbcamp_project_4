@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Users',
   });
 
-  Users.beforeCreate(async (user, options) => { // Hook 사용
+  Users.beforeCreate(async (user, options) => { // Hook 사용하여 비밀번호 저장 전에 암호화 진행
     if (user.password) {
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(user.password, salt);

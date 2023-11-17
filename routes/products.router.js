@@ -107,7 +107,7 @@ router.put("/products/detail/:productId", authMiddleware, async (req, res) => {
 
     // 기존 작성한 상품이 본인 것이 아닐 경우
     if (existsProduct.userId !== userId) {
-      return res.status(401).json({ errorMessage: "상품을 수정할 권한이 없습니다." });
+      return res.status(403).json({ errorMessage: "상품을 수정할 권한이 없습니다." });
     };
 
     // 상품 수정하기
@@ -125,7 +125,7 @@ router.put("/products/detail/:productId", authMiddleware, async (req, res) => {
     console.error('상품 수정 실패', error);
 
     if (error.name === 'SequelizeValidationError') { // 모델에서 validate 기능 활용해보기 !!!!
-      return res.status(401).json(error.message);
+      return res.status(400).json(error.message);
     }
 
     res.status(500).json({ errorMessage: "상품 수정에 실패했습니다." });
@@ -147,11 +147,11 @@ router.delete("/products/detail/:productId", authMiddleware, async (req, res) =>
     }
 
     // 기존 작성한 상품이 본인 것이 아닐 경우
-    if (existsProduct.id !== userId) {
-      return res.status(401).json({ errorMessage: "상품을 삭제할 권한이 없습니다." });
+    if (existsProduct.userId !== userId) {
+      return res.status(403).json({ errorMessage: "상품을 삭제할 권한이 없습니다." });
     };
 
-    // 비밀번호가 일치하고 상품이 존재하는 경우에만 삭제 수행
+    // 상품 아이디와 유저 아이디가 일치할 경우
     await Products.destroy({
       where: {
         [Op.and]: [{ id: productId }, { userId }]

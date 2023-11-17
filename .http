@@ -8,9 +8,9 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
   {
-    "email": "test3@test.tst",
-    "userName": "문준식3",
-    "password": "1231",
+    "email": "test7@test.test",
+    "userName": "문준식7",
+    "password": "12312313",
     "confirmPassword": "12312313"
   }
 
@@ -48,7 +48,7 @@ GET http://localhost:3000/api/products
 ###
 
 # 상품 상세 조회
-GET http://localhost:3000/api/products/detail/6
+GET http://localhost:3000/api/products/detail/9
 
 ###
 
@@ -57,14 +57,14 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
   {
-    "productName": "독수리",
-    "contents": "하늘의 왕 독수리"
+    "productName": "바다사자",
+    "contents": "바다사자는 헤엄을 잘쳐요"
   }
 
 ###
 
 # 상품 수정
-PUT http://localhost:3000/api/products/detail/7
+PUT http://localhost:3000/api/products/detail/9
 Content-Type: application/json
 
 {
@@ -76,5 +76,4 @@ Content-Type: application/json
 ###
 
 # 상품 삭제
-DELETE http://localhost:3000/api/products/detail/5
-Content-Type: application/json
+DELETE http://localhost:3000/api/products/detail/2
