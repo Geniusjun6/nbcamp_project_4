@@ -4,12 +4,12 @@ GET http://localhost:3000/
 ###
 
 # 회원가입
-POST http://localhost:3000/api/users
+POST http://localhost:3000/api/users/signup
 Content-Type: application/json
 
   {
-    "email": "test7@test.test",
-    "userName": "문준식7",
+    "email": "test9@test.test",
+    "userName": "문준식9",
     "password": "12312313",
     "confirmPassword": "12312313"
   }
@@ -17,11 +17,11 @@ Content-Type: application/json
 ###
 
 # 로그인
-POST http://localhost:3000/api/login
+POST http://localhost:3000/api/users/signin
 Content-Type: application/json
 
   {
-    "email": "test3@test.test",
+    "email": "test8@test.test",
     "password": "12312313"
   }
 

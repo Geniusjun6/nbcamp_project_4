@@ -7,33 +7,34 @@ const router = express.Router();
 const { Users } = db;
 
 // 회원가입 //
-router.post("/users", async (req, res) => {
+router.post("/users/signup", async (req, res) => {
   const { email, userName, password, confirmPassword } = req.body;
   try {
     // 이메일 형식이 아닐 경우 Error 메시지 발송
     const emailForm = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
     if (!emailForm.test(email)) {
-      res.status(400).json({ errorMessage: "이메일 형식이 올바르지 않습니다." });
-      return;
+      return res.status(400).json({ errorMessage: "이메일 형식이 올바르지 않습니다." });
     };
+
+    // 입력 받는 데이터가 없는 경우 ! 
+    if (!email || !userName || !password) {
+      return res.status(400).json({ errorMessage: "가입 정보를 모두 입력해주세요." });
+    }
 
     // 동일한 email이 있을 경우 Error 메시지 발송
     const existUser = await Users.findOne({ where: { email } });
     if (existUser) {
-      res.status(400).json({ errorMessage: "이미 가입된 이메일 입니다." });
-      return;
+      return res.status(400).json({ errorMessage: "이미 가입된 이메일 입니다." });
     };
 
     // 입력된 password 길이가 6자 미만일 경우 Error 메시지 발송
     if (password.length < 6) {
-      res.status(400).json({ errorMessage: "비밀번호는 최소 6자 이상 입력되어야 합니다." });
-      return;
+      return res.status(400).json({ errorMessage: "비밀번호는 최소 6자 이상 입력되어야 합니다." });
     };
 
     // password와 confirmPassword 값이 일치하지 않을 경우 Error 메시지 발송
     if (password !== confirmPassword) {
-      res.status(401).json({ errorMessage: "비밀번호를 확인해주세요." });
-      return;
+      return res.status(401).json({ errorMessage: "비밀번호를 확인해주세요." });
     };
 
     // 유효성 검사 후 신규 유저 생성
@@ -49,16 +50,19 @@ router.post("/users", async (req, res) => {
 
 
 // 로그인 //
-router.post("/login", async (req, res) => {
+router.post("/users/signin", async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await Users.findOne({ where: { email } });
 
+    if (!email || !password) {
+      return res.status(400).json({ errorMessage: "이메일 또는 비밀번호를 입력해주세요." });
+    };
+
     // email이 없을 경우 (기존 회원이 아닌 경우) or 비밀번호를 잘못 입력하였을 경우
     // 비밀번호 비교 시 bcrypt.compare 메서드를 통해 해싱 진행
     if (!user || !(await bcrypt.compare(password, user.password))) { // 모델에 집어넣어보기? 
-      res.status(401).json({ errorMessage: "이메일 또는 비밀번호를 확인해주세요." });
-      return;
+      return res.status(401).json({ errorMessage: "이메일 또는 비밀번호를 확인해주세요." });
     };
 
     // 로그인 시 jwt 토큰 생성 생성
