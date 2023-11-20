@@ -66,7 +66,7 @@ router.get('/products', authMiddleware, async (req, res) => {
 
 
 // Read 상품 상세 조회 // 
-router.get('/products/detail/:productId', async (req, res) => {
+router.get('/products/detail/:productId', authMiddleware, async (req, res) => {
   try {
     const { productId } = req.params;
 
