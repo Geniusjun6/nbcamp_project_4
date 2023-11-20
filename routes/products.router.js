@@ -35,7 +35,7 @@ router.post('/products', authMiddleware, async (req, res) => {
 
 
 // Read 전체 상품 조회//
-router.get('/products', authMiddleware, async (req, res) => {
+router.get('/products', async (req, res) => {
   try {
     const sortValue = req.query.sort; // query string에서 정렬값 받아오기
     let sort
@@ -66,7 +66,7 @@ router.get('/products', authMiddleware, async (req, res) => {
 
 
 // Read 상품 상세 조회 // 
-router.get('/products/detail/:productId', authMiddleware, async (req, res) => {
+router.get('/products/detail/:productId', async (req, res) => {
   try {
     const { productId } = req.params;
 
