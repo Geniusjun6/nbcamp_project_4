@@ -1,15 +1,17 @@
 import express from 'express';
-import db from '../models/index.cjs';
-import authMiddleware from '../middlwares/need-signin.middlware.js';
-import { Op } from 'sequelize';
+import { ProductsController } from '../controllers/products.controller.js'
+// import authMiddleware from '../middlwares/need-signin.middlware.js';
 
-const { Products } = db;
-const { Users } = db;
 const router = express.Router();
+
+const productsController = new ProductsController();
+
+/* 상품등록 API (Create) */
+router.post('/products', productsController.createProduct);
 
 
 // Create 상품 등록 //
-router.post('/products', authMiddleware, async (req, res) => {
+router.post('/products', async (req, res) => {
   try {
     const { id } = res.locals.user;
     const { productName, contents } = req.body;
@@ -92,7 +94,7 @@ router.get('/products/detail/:productId', async (req, res) => {
 
 
 // Update 상품 수정 // 
-router.put("/products/detail/:productId", authMiddleware, async (req, res) => {
+router.put("/products/detail/:productId", async (req, res) => {
   try {
     const { productId } = req.params;
     const { id: userId } = res.locals.user; // 로컬 유저에 들어있는 id 키값을 userId 변수로 받는다.
@@ -134,7 +136,7 @@ router.put("/products/detail/:productId", authMiddleware, async (req, res) => {
 
 
 // Delete 상품 삭제 //
-router.delete("/products/detail/:productId", authMiddleware, async (req, res) => {
+router.delete("/products/detail/:productId", async (req, res) => {
   try {
     const { productId } = req.params;
     const { id: userId } = res.locals.user; // 로컬 유저에 들어있는 id 키값을 userId 변수로 받는다.
