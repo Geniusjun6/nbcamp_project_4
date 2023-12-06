@@ -12,7 +12,7 @@ datasource db {
 
 model Users {
   userId  Int  @id  @default(autoincrement()) @map("userId")
-  userName  String  @unique @map("userName")
+  userName  String  @map("userName")
   email  String  @unique  @map("email")
   password  String  @map("password")
 
@@ -25,10 +25,10 @@ model Users {
   }
 
 model Products {
-  productId  Int @id  @default(autoincrement())  @map("productId")
+  productId  Int  @id  @default(autoincrement())  @map("productId")
   UserId Int  @map("UserId")
-  productName String @map("productName")
-  contents String @map("contents")
+  productName  String  @map("productName")
+  contents  String  @map("contents")
   status  Status  @default(FOR_SALE) @map("status")
 
   createdAt  DateTime @default(now()) @map("createdAt")
