@@ -8,13 +8,13 @@ export class ProductsController {
       const { userId } = res.locals.user;
       const { productName, contents } = req.body
 
-      const createdPost = await this.productsService.createProduct(
+      const createdProduct = await this.productsService.createProduct(
         userId,
         productName,
         contents,
       );
 
-      return res.status(201).json({ data: createdPost })
+      return res.status(201).json({ data: createdProduct })
     } catch (error) {
       next(error);
     };
