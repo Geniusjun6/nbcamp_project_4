@@ -6,6 +6,7 @@ export class ProductsController {
   createProduct = async (req, res, next) => {
     try {
       const { userId } = res.locals.user;
+
       const { productName, contents } = req.body
 
       const createdProduct = await this.productsService.createProduct(
@@ -23,7 +24,8 @@ export class ProductsController {
 
   getProducts = async (req, res, next) => {
     try {
-      const sortValue = (req.query.sort).toUpperCase(); // query string에서 정렬값 받아오기
+      // query string에서 정렬값 받아오기 없으면 DESC 고정
+      const sortValue = req.query.sort ? (req.query.sort).toUpperCase() : "DESC";
       const products = await this.productsService.findAllProducts(sortValue);
 
       return res.status(200).json({ products });
@@ -75,7 +77,7 @@ export class ProductsController {
 
       const deletedProduct = await this.productsService.deleteProduct(productId, userId);
 
-      return res.status(200).json(deletedProduct);
+      return res.status(200).json({ message: "상품 삭제가 완료되었습니다.", deletedProduct });
     } catch (error) {
       next(error);
     };

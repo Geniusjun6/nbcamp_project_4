@@ -16,36 +16,37 @@ export class ProductsRepository {
       }
     });
     return createdProduct;
-  }
+  };
 
 
   findProductById = async (productId) => {
-    const post = await prisma.Products.findFirst({
+    const product = await prisma.Products.findFirst({
       where: { productId: +productId }
     });
-    return post;
+    return product;
   };
 
 
   updateProduct = async (productId, userId, productName, contents, status) => {
-    const updatedPost = await prisma.Products.update({
+    const updatedProduct = await prisma.Products.update({
       where: {
         productId: +productId,
         UserId: userId
       },
       data: {
-        title,
+        productName,
         contents,
-        status
+        status,
+        updatedAt: new Date()
       }
     });
 
-    return updatedPost;
+    return updatedProduct;
   };
 
 
   deleteProduct = async (productId, userId) => {
-    const deletePost = await prisma.Products.delete({
+    await prisma.Products.delete({
       where: {
         productId: +productId,
         UserId: userId
