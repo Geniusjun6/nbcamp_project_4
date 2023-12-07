@@ -1,5 +1,6 @@
 import express from 'express';
 import { UsersController } from '../controllers/users.controller.js';
+import authenticate from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 const usersController = new UsersController;
@@ -11,6 +12,6 @@ router.post('/signup', usersController.signUp);
 router.post('/signin', usersController.signIn);
 
 /* 사용자 조회 */
-router.get('/users/userInfo', usersController.getUserInfo);
+router.get('/users/userInfo', authenticate, usersController.getUserInfo);
 
 export default router;
