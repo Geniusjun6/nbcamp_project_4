@@ -1,0 +1,49 @@
+# 페이지 접속
+GET http://localhost:3000/
+
+
+# 상품조회(내림차순)
+GET http://localhost:3000/api/products?sort=asc
+
+###
+
+# 상품조회(오름차순)
+GET http://localhost:3000/api/products?sort=desc
+
+###
+
+# 상품조회(Default = 오름차순)
+GET http://localhost:3000/api/products
+
+###
+
+# 상품 상세 조회
+GET http://localhost:3000/api/products/5
+
+###
+
+# 상품 생성
+POST http://localhost:3000/api/products
+Content-Type: application/json
+
+  {
+    "productName": "바다사자",
+    "contents": "바다사자는 헤엄을 잘쳐요"
+  }
+
+###
+
+# 상품 수정
+PUT http://localhost:3000/api/products/6
+Content-Type: application/json
+
+{
+  "productName": "거북이",
+  "contents" : "거북이는 헤엄을 잘쳐요",
+  "status" : "SOLD_OUT"
+}
+
+###
+
+# 상품 삭제
+DELETE http://localhost:3000/api/products/6
