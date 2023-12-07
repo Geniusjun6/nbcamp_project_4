@@ -141,9 +141,6 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
-# REST Client
-.http
-
 # DS_Store
 .DS_Store
 

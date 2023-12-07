@@ -1,0 +1,31 @@
+# 페이지 접속
+GET http://localhost:3000/
+
+###
+
+# 회원가입
+POST http://localhost:3000/api/signup
+Content-Type: application/json
+
+  {
+    "email": "test4@test4.test",
+    "userName": "문준식3",
+    "password": "131313",
+    "confirmPassword": "131313"
+  }
+
+###
+
+# 로그인
+POST http://localhost:3000/api/signin
+Content-Type: application/json
+
+  {
+    "email": "test4@test4.test",
+    "password": "131313"
+  }
+
+### 
+
+# 사용자 조회 
+GET http://localhost:3000/api/users/userInfo
