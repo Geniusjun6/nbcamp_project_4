@@ -51,9 +51,13 @@ const errorHandling = async (err, req, res, next) => {
       break;
 
     case "권한이 없습니다.":
-      statusCode = 403
+      statusCode = 403;
       break;
 
+    /* 상품 업데이트 시 유효성 검사 */
+    case "상태값을 확인해주세요.":
+      statusCode = 400;
+      break;
 
     /* auth 미들웨어 유효성 검사 */
     case "jwt expired":

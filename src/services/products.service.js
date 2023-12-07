@@ -84,7 +84,11 @@ export class ProductsService {
     // 로그인 한 유저가 다른 사람의 상품을 수정할 때
     if (product.UserId !== userId) {
       throw new Error("권한이 없습니다.");
-    }
+    };
+
+    if (status !== "FOR_SALE" || status !== "SOLD_OUT") {
+      throw new Error("상태값을 확인해주세요.");
+    };
 
     const updatedProduct = await this.productsRepository.updateProduct(productId, userId, productName, contents, status);
 

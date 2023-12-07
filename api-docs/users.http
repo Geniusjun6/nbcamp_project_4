@@ -1,10 +1,14 @@
+@URL = http://localhost:3000/api
+@TOKEN1 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IuusuOykgOyLnTMiLCJ1c2VySWQiOjQsImVtYWlsIjoidGVzdDRAdGVzdDQudGVzdCIsImlhdCI6MTcwMTk0MzIxNiwiZXhwIjoxNzAxOTg2NDE2fQ.nnFAtzvCMMNrSP4EB04jRP4GgKQlym5kH0Tsd53PWtg
+@TOKEN2 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Iu2FjOyKpO2KuCIsInVzZXJJZCI6NiwiZW1haWwiOiJ0ZXN0NUB0ZXN0NS50ZXN0IiwiaWF0IjoxNzAxOTQzNjMzLCJleHAiOjE3MDE5ODY4MzN9.llnvXZ1P_LwuMRLHc1l5FQUD-oO8ebU-sreFLXq5eZ0
+
 # 페이지 접속
 GET http://localhost:3000/
 
 ###
 
 # 회원가입
-POST http://localhost:3000/api/signup
+POST {{URL}}/signup
 Content-Type: application/json
 
   {
@@ -17,7 +21,7 @@ Content-Type: application/json
 ###
 
 # 로그인
-POST http://localhost:3000/api/signin
+POST {{URL}}/signin
 Content-Type: application/json
 
   {
@@ -28,4 +32,5 @@ Content-Type: application/json
 ### 
 
 # 사용자 조회 
-GET http://localhost:3000/api/users/userInfo
+GET {{URL}}/users/userInfo
+Authorization: Bearer {{TOKEN1}}
