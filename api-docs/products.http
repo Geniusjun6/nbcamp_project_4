@@ -18,7 +18,7 @@ GET http://localhost:3000/api/products
 ###
 
 # 상품 상세 조회
-GET http://localhost:3000/api/products/7
+GET http://localhost:3000/api/products/12
 
 ###
 
