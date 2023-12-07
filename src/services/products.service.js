@@ -4,6 +4,11 @@ export class ProductsService {
   productsRepository = new ProductsRepository;
 
   createProduct = async (userId, productName, contents) => {
+
+    if (!productName || !contents) {
+      throw new Error("상품 정보를 모두 입력해주세요.")
+    };
+
     const product = await this.productsRepository.createProduct(
       userId,
       productName,
@@ -11,6 +16,7 @@ export class ProductsService {
     );
 
     return {
+      productId: product.productId,
       UserId: product.UserId,
       productName: product.productName,
       contents: product.contents,
@@ -29,10 +35,6 @@ export class ProductsService {
         return a.createdAt - b.createdAt
       });
     } else if (sortValue === 'DESC') { // 아니면 내림차순(최신순)으로 정렬한다.
-      products.sort((a, b) => {
-        return b.createdAt - a.createdAt
-      });
-    } else {
       products.sort((a, b) => {
         return b.createdAt - a.createdAt
       });
@@ -71,20 +73,19 @@ export class ProductsService {
   };
 
   updateProduct = async (productId, userId, productName, contents, status) => {
-
     const product = await this.productsRepository.findProductById(productId);
 
     if (!product) {
       throw new Error("존재하는 상품이 없습니다.");
     };
 
+    // 로그인 한 유저가 다른 사람의 상품을 수정할 때
     if (product.UserId !== userId) {
       throw new Error("권한이 없습니다.");
     }
 
-    await this.productsRepository.updateProduct(productName, contents, status);
+    const updatedProduct = await this.productsRepository.updateProduct(productId, userId, productName, contents, status);
 
-    const updatedProduct = await this.productsRepository.findProductById(productId);
 
     return {
       productId: updatedProduct.productId,
@@ -109,8 +110,9 @@ export class ProductsService {
       throw new Error("권한이 없습니다.");
     };
 
-    await this.productsRepository.deleteProduct(postId)
+    await this.productsRepository.deleteProduct(productId)
 
+    // 삭제한 상품을 리턴해준다.
     return {
       productId: product.productId,
       productName: product.productName,
