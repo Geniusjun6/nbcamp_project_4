@@ -1,49 +1,55 @@
+@URL = http://localhost:3000/api
+@TOKEN1 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IuusuOykgOyLnTMiLCJ1c2VySWQiOjQsImVtYWlsIjoidGVzdDRAdGVzdDQudGVzdCIsImlhdCI6MTcwMTk0MzIxNiwiZXhwIjoxNzAxOTg2NDE2fQ.nnFAtzvCMMNrSP4EB04jRP4GgKQlym5kH0Tsd53PWtg
+@TOKEN2 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Iu2FjOyKpO2KuCIsInVzZXJJZCI6NiwiZW1haWwiOiJ0ZXN0NUB0ZXN0NS50ZXN0IiwiaWF0IjoxNzAxOTQzNjMzLCJleHAiOjE3MDE5ODY4MzN9.llnvXZ1P_LwuMRLHc1l5FQUD-oO8ebU-sreFLXq5eZ0
 # 페이지 접속
 GET http://localhost:3000/
 
 ###
 # 상품조회(내림차순)
-GET http://localhost:3000/api/products?sort=asc
+GET {{URL}}/products?sort=asc
 
 ###
 
 # 상품조회(오름차순)
-GET http://localhost:3000/api/products?sort=desc
+GET {{URL}}/products?sort=desc
 
 ###
 
 # 상품조회(Default = 오름차순)
-GET http://localhost:3000/api/products
+GET {{URL}}/products
 
 ###
 
 # 상품 상세 조회
-GET http://localhost:3000/api/products/12
+GET {{URL}}/products/7
 
 ###
 
 # 상품 생성
-POST http://localhost:3000/api/products
+POST {{URL}}/products
 Content-Type: application/json
+Authorization: Bearer {{TOKEN2}}
 
   {
-    "productName": "바다사자",
-    "contents": "바다사자는 헤엄을 잘쳐요"
+    "productName": "사자",
+    "contents": "사자는 밀림의 왕"
   }
 
 ###
 
 # 상품 수정
-PUT http://localhost:3000/api/products/6
+PUT {{URL}}/products/10
 Content-Type: application/json
+Authorization: Bearer {{TOKEN1}}
 
 {
-  "productName": "거북이",
-  "contents" : "거북이는 헤엄을 잘쳐요",
+  "productName": "사자",
+  "contents" : "밀림의 왕 사자에요",
   "status" : "SOLD_OUT"
 }
 
 ###
 
 # 상품 삭제
-DELETE http://localhost:3000/api/products/6
+DELETE {{URL}}/products/6
+Authorization: Bearer {{TOKEN1}}

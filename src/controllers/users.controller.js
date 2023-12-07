@@ -26,9 +26,7 @@ export class UsersController {
       const { email, password } = req.body;
       const token = await this.usersService.signIn(email, password);
 
-      // 프론트 코드 작성이 없기 때문에 백엔드에서 토큰을 쿠키에 넣어준다.
-      res.cookie("Authorization", `Bearer ${token}`);
-      return res.status(200).json({ message: "로그인에 성공했습니다." });
+      return res.status(200).json({ message: "로그인에 성공했습니다.", token });
     } catch (error) {
       next(error);
     };

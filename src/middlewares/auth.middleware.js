@@ -2,8 +2,8 @@ import jwt from 'jsonwebtoken';
 
 const authenticate = async (req, res, next) => {
   try {
-    const { Authorization } = req.cookies;
-    const [tokenType, token] = (Authorization ?? "").split(" ");
+    const token = req.headers.authorization;
+    const [tokenType, accessToken] = (token ?? "").split(" ");
 
     // 토큰 타입이 불일치 할 경우 (Bearer 가 아닐경우)
     if (tokenType !== "Bearer") {
@@ -11,7 +11,7 @@ const authenticate = async (req, res, next) => {
     };
 
     // 토큰에 유저 정보를 담아서 데이터베이스 조회하는 프로세스를 줄이고자함
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const decodedToken = jwt.verify(accessToken, process.env.JWT_SECRET_KEY);
 
     if (!decodedToken) {
       throw new Error("유효하지 않은 토큰입니다.");
@@ -25,7 +25,6 @@ const authenticate = async (req, res, next) => {
     next();
 
   } catch (error) {
-    res.clearCookie("Authorization");
     next(error);
   };
 }
