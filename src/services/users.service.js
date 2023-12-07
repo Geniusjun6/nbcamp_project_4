@@ -75,8 +75,7 @@ export class UsersService {
       email: user.email
     }, process.env.JWT_SECRET_KEY, { expiresIn: "12h" });
 
-    // 프론트 코드 작성이 없기 때문에 백엔드에서 토큰을 쿠키에 넣어준다.
-    res.cookie("Authorization", `Bearer ${token}`);
+    return token;
   };
 
 

@@ -6,7 +6,7 @@ export class UsersRepository {
       data: {
         email,
         userName,
-        hashedPassword,
+        password: hashedPassword,
       }
     });
     return newUser;

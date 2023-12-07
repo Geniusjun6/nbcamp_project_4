@@ -1,6 +1,5 @@
 import express from 'express';
 import { UsersController } from '../controllers/users.controller.js';
-import authMiddleware from '../middlwares/need-signin.middlware.js';
 
 const router = express.Router();
 const usersController = new UsersController;
