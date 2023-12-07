@@ -33,4 +33,14 @@ export class UsersController {
   };
 
 
+  getUserInfo = async (req, res, next) => {
+    try {
+      const user = req.user;
+
+      await this.usersService.getUserInfo(user);
+    } catch (error) {
+      next(error);
+    };
+  }
+
 };

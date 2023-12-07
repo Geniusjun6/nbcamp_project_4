@@ -53,7 +53,6 @@ export class UsersService {
   };
 
 
-
   signIn = async (email, password) => {
 
     // 이메일과 비밀번호를 입력하지 않았을 때
@@ -78,5 +77,20 @@ export class UsersService {
 
     // 프론트 코드 작성이 없기 때문에 백엔드에서 토큰을 쿠키에 넣어준다.
     res.cookie("Authorization", `Bearer ${token}`);
+  };
+
+
+  getUserInfo = async (user) => {
+    if (!user) {
+      throw new Error("유저를 찾을 수 없습니다.");
+    };
+
+    return {
+      userId: user.userId,
+      email: user.email,
+      userName: user.userName,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt
+    };
   };
 };
