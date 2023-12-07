@@ -2,7 +2,23 @@ import { prisma } from "../utils/prisma/index.js"
 
 export class ProductsRepository {
   findAllproducts = async () => {
-    const products = await prisma.Products.findMany();
+    const products = await prisma.Products.findMany(
+      {
+        select: {
+          UserId: true,
+          productId: true,
+          productName: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true,
+          Users: {
+            select: { // 중첩 select 문으로 유저 이름 추가 
+              userName: true,
+            }
+          }
+        }
+      }
+    );
     return products;
   };
 
@@ -21,8 +37,23 @@ export class ProductsRepository {
 
   findProductById = async (productId) => {
     const product = await prisma.Products.findFirst({
-      where: { productId: +productId }
-    });
+      where: { productId: +productId },
+      select: {
+        UserId: true,
+        productId: true,
+        productName: true,
+        status: true,
+        contents: true,
+        createdAt: true,
+        updatedAt: true,
+        Users: {
+          select: { // 중첩 select 문으로 유저 이름 추가 
+            userName: true,
+          }
+        }
+      }
+    }
+    );
     return product;
   };
 
