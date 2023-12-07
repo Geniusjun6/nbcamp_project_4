@@ -5,17 +5,17 @@
 GET http://localhost:3000/
 
 ###
-# 상품조회(내림차순)
+# 상품조회(오름차순)
 GET {{URL}}/products?sort=asc
 
 ###
 
-# 상품조회(오름차순)
+# 상품조회(내림차순)
 GET {{URL}}/products?sort=desc
 
 ###
 
-# 상품조회(Default = 오름차순)
+# 상품조회(Default = 내림차순)
 GET {{URL}}/products
 
 ###
