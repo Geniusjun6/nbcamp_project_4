@@ -37,9 +37,10 @@ export class UsersController {
 
   getUserInfo = async (req, res, next) => {
     try {
-      const user = req.user;
+      const user = res.locals.user;
 
       await this.usersService.getUserInfo(user);
+      return res.status(200).json({ message: "유저 정보 조회에 성공했습니다.", user });
     } catch (error) {
       next(error);
     };
