@@ -1,26 +1,17 @@
 import express from 'express';
-import db from '../models/index.cjs';
+import { UsersController } from '../controllers/users.controller.js';
 import authMiddleware from '../middlwares/need-signin.middlware.js';
 
-const { Users } = db;
 const router = express.Router();
+const usersController = new UsersController;
 
-// Read 사용자 조회 // 
-router.get("/users/userInfo", authMiddleware, async (req, res) => {
-  try {
-    const { id } = res.locals.user;
+/* 회원가입 */
+router.post('/signup', usersController.signUp);
 
-    const user = await Users.findOne({
-      attributes: { exclude: ["password"] },
-      where: { id }
-    });
+/* 로그인 */
+router.post('/signin', usersController.signIn);
 
-    return res.status(200).json({ user });
-
-  } catch (error) {
-    console.error("사용자 조회 실패", error);
-    res.status(500).json({ errorMessage: "사용자 조회에 실패했습니다." });
-  }
-})
+/* 사용자 조회 */
+router.get('/users/userInfo', usersController.getUserInfo);
 
 export default router;
