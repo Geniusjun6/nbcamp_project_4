@@ -47,7 +47,8 @@ export class ProductsService {
         contents: product.contents,
         status: product.status,
         createdAt: product.createdAt,
-        updatedAt: product.updatedAt
+        updatedAt: product.updatedAt,
+        userName: product.Users.userName
       }
     })
   };
@@ -68,7 +69,8 @@ export class ProductsService {
       status: product.status,
       UserId: product.UserId,
       createdAt: product.createdAt,
-      updatedAt: product.updatedAt
+      updatedAt: product.updatedAt,
+      userName: product.Users.userName
     };
   };
 

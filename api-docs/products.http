@@ -1,7 +1,7 @@
 # 페이지 접속
 GET http://localhost:3000/
 
-
+###
 # 상품조회(내림차순)
 GET http://localhost:3000/api/products?sort=asc
 
@@ -18,7 +18,7 @@ GET http://localhost:3000/api/products
 ###
 
 # 상품 상세 조회
-GET http://localhost:3000/api/products/5
+GET http://localhost:3000/api/products/7
 
 ###
 
