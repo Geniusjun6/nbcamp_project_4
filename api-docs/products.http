@@ -1,6 +1,6 @@
 @URL = http://localhost:3000/api
-@TOKEN1 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IuusuOykgOyLnTMiLCJ1c2VySWQiOjQsImVtYWlsIjoidGVzdDRAdGVzdDQudGVzdCIsImlhdCI6MTcwMTk0MzIxNiwiZXhwIjoxNzAxOTg2NDE2fQ.nnFAtzvCMMNrSP4EB04jRP4GgKQlym5kH0Tsd53PWtg
-@TOKEN2 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Iu2FjOyKpO2KuCIsInVzZXJJZCI6NiwiZW1haWwiOiJ0ZXN0NUB0ZXN0NS50ZXN0IiwiaWF0IjoxNzAxOTQzNjMzLCJleHAiOjE3MDE5ODY4MzN9.llnvXZ1P_LwuMRLHc1l5FQUD-oO8ebU-sreFLXq5eZ0
+@TOKEN1 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IuusuOykgOyLnTMiLCJ1c2VySWQiOjQsImVtYWlsIjoidGVzdDRAdGVzdDQudGVzdCIsImlhdCI6MTcwMjA0NTc0NCwiZXhwIjoxNzAyMDg4OTQ0fQ.booIHT5vbaJPZhTn01YX0WgAazotDQDtSK9nN1wW-wk
+@TOKEN2 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVdCJ9.eyJ1c2VyTmFtZSI6Iu2FjOyKpO2KuCIsInVzZXJJZCI6NiwiZW1haWwiOiJ0ZXN0NUB0ZXN0NS50ZXN0IiwiaWF0IjoxNzAxOTQzNjMzLCJleHAiOjE3MDE5ODY4MzN9.llnvXZ1P_LwuMRLHc1l5FQUD-oO8ebU-sreFLXq5eZ0
 # 페이지 접속
 GET http://localhost:3000/
 
@@ -28,10 +28,10 @@ GET {{URL}}/products/7
 # 상품 생성
 POST {{URL}}/products
 Content-Type: application/json
-Authorization: Bearer {{TOKEN2}}
+Authorization: Bearer {{TOKEN1}}
 
   {
-    "productName": "사자",
+    "productName": "",
     "contents": "사자는 밀림의 왕"
   }
 
@@ -52,4 +52,4 @@ Authorization: Bearer {{TOKEN1}}
 
 # 상품 삭제
 DELETE {{URL}}/products/6
-Authorization: Bearer {{TOKEN1}}
+Authorization: Bearer {{TOKEN2}}
